@@ -119,3 +119,10 @@ if ($url = $_ENV['MYSQL_URL'] ?? $_ENV['MYSQL_PUBLIC_URL'] ?? null) {
    to change the default configuration. Do _NOT_ modify systemdefaults.inc.php
    or areadefaults.inc.php.  */
 
+$mrbs_admin = "Secrétariat MSHP";
+$mrbs_admin_email = "secretariat-mshp@upf.pf ";
+$mrbs_company = "MSH-P";
+$mrbs_company_logo = "MSHP-logo-BD-couleur.jpg";
+$mrbs_company_url = "https://www.mshp.upf.pf/fr";
+
+
