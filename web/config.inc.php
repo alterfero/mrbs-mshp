@@ -43,6 +43,8 @@ require_once 'lib/autoload.inc';
 // The timezone can also be configured through the MRBS_TIMEZONE environment variable
 $timezone = $_ENV['MRBS_TIMEZONE'] ?? 'Pacific/Honolulu';
 
+$default_language_tokens = 'fr';
+
 
 /*******************
  * Database settings
