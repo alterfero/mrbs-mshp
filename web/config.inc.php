@@ -41,7 +41,7 @@ require_once 'lib/autoload.inc';
 //
 // A list of valid timezones can be found at http://php.net/manual/timezones.php
 // The timezone can also be configured through the MRBS_TIMEZONE environment variable
-$timezone = $_ENV['MRBS_TIMEZONE'] ?? 'Europe/London';
+$timezone = $_ENV['MRBS_TIMEZONE'] ?? 'Pacific/Honolulu';
 
 
 /*******************
