@@ -40,8 +40,8 @@ require_once 'lib/autoload.inc';
 // timezone the web server runs in.  See the INSTALL document for more information.
 //
 // A list of valid timezones can be found at http://php.net/manual/timezones.php
-// The following line must be uncommented by removing the '//' at the beginning
-//$timezone = "Europe/London";
+// The timezone can also be configured through the MRBS_TIMEZONE environment variable
+$timezone = $_ENV['MRBS_TIMEZONE'] ?? 'Europe/London';
 
 
 /*******************
@@ -54,28 +54,28 @@ require_once 'lib/autoload.inc';
 // prefix is not the same as the table prefix below.)
 
 // Which database system: "pgsql"=PostgreSQL, "mysql"=MySQL
-$dbsys = "mysql";
+$dbsys = $_ENV['MRBS_DB_SYSTEM'] ?? 'mysql';
 // Hostname of database server. For pgsql, can use "" instead of localhost
 // to use Unix Domain Sockets instead of TCP/IP. For mysql "localhost"
 // tells the system to use Unix Domain Sockets, and $db_port will be ignored;
 // if you want to force TCP connection you can use "127.0.0.1".
-$db_host = "localhost";
+$db_host = $_ENV['MRBS_DB_HOST'] ?? 'localhost';
 // If you need to use a non standard port for the database connection you
 // can uncomment the following line and specify the port number
 // $db_port = 1234;
 // Database name:
-$db_database = "mrbs";
+$db_database = $_ENV['MRBS_DB_DATABASE'] ?? 'mrbs';
 // Schema name.  This only applies to PostgreSQL and is only necessary if you have more
 // than one schema in your database and also you are using the same MRBS table names in
 // multiple schemas.
 //$db_schema = "public";
 // Database login user name:
-$db_login = "mrbs";
+$db_login = $_ENV['MRBS_DB_USER'] ?? 'mrbs';
 // Database login password:
-$db_password = 'mrbs-password';
+$db_password = $_ENV['MRBS_DB_PASSWORD'] ?? 'mrbs-password';
 // Prefix for table names.  This will allow multiple installations where only
 // one database is available
-$db_tbl_prefix = "mrbs_";
+$db_tbl_prefix = $_ENV['MRBS_DB_TBL_PREFIX'] ?? 'mrbs_';
 // Set $db_persist to TRUE to use PHP persistent (pooled) database connections.  Note
 // that persistent connections are not recommended unless your system suffers significant
 // performance problems without them.   They can cause problems with transactions and
@@ -83,6 +83,34 @@ $db_tbl_prefix = "mrbs_";
 // MRBS tries to avoid those problems, it is generally better not to use persistent
 // connections if you can.
 $db_persist = false;
+
+// Allow configuration via common Railway environment variables
+$db_host = $_ENV['MYSQLHOST'] ?? $_ENV['MYSQL_HOST'] ?? $db_host;
+if (!empty($_ENV['MYSQLPORT'])) {
+  $db_port = $_ENV['MYSQLPORT'];
+}
+$db_database = $_ENV['MYSQLDATABASE'] ?? $_ENV['MYSQL_DATABASE'] ?? $db_database;
+$db_login = $_ENV['MYSQLUSER'] ?? $db_login;
+$db_password = $_ENV['MYSQLPASSWORD'] ?? $_ENV['MYSQL_ROOT_PASSWORD'] ?? $db_password;
+
+if ($url = $_ENV['MYSQL_URL'] ?? $_ENV['MYSQL_PUBLIC_URL'] ?? null) {
+  $url_parts = parse_url($url);
+  if (!empty($url_parts['host'])) {
+    $db_host = $url_parts['host'];
+  }
+  if (!empty($url_parts['port'])) {
+    $db_port = $url_parts['port'];
+  }
+  if (!empty($url_parts['user'])) {
+    $db_login = $url_parts['user'];
+  }
+  if (!empty($url_parts['pass'])) {
+    $db_password = $url_parts['pass'];
+  }
+  if (!empty($url_parts['path'])) {
+    $db_database = ltrim($url_parts['path'], '/');
+  }
+}
 
 
 /* Add lines from systemdefaults.inc.php and areadefaults.inc.php below here
