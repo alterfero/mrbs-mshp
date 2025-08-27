@@ -30,7 +30,7 @@ need_bootstrap() {
 
 import_schema() {
   echo "Importing MRBS schema ..."
-  mysql -h "$MYSQLHOST" -P "${MYSQLPORT:-3306}" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQL_DATABASE" < /var/www/html/tables.my.sql
+  mysql --ssl-mode=REQUIRED -h "$MYSQLHOST" -P "${MYSQLPORT:-3306}" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQL_DATABASE" < /var/www/html/tables.my.sql
   echo "Schema imported."
 }
 
