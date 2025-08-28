@@ -13,4 +13,9 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 # Ensure mysql client exists at build (optional; script will install if missing)
 RUN apt-get update && apt-get install -y default-mysql-client && rm -rf /var/lib/apt/lists/*
 
+ENV LANG=fr_FR.UTF-8 \
+    LANGUAGE=fr_FR:fr \
+    LC_ALL=fr_FR.UTF-8 \
+    LC_TIME=fr_FR.UTF-8
+
 ENTRYPOINT ["docker-entrypoint.sh"]
