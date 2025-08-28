@@ -132,5 +132,28 @@ $weekstarts = 1;
 $view_week_number = true;
 $default_view = "month";
 
+// --- Force French locale (C + ICU/Intl) ---
+putenv('LANG=fr_FR.UTF-8');
+putenv('LC_ALL=fr_FR.UTF-8');
+putenv('LC_TIME=fr_FR.UTF-8');
+setlocale(LC_ALL, 'fr_FR.UTF-8');
+setlocale(LC_TIME, 'fr_FR.UTF-8');
+
+// Intl (MRBS can use IntlDateFormatter under the hood on PHP 8+)
+ini_set('intl.default_locale', 'fr_FR');
+if (class_exists('Locale')) { Locale::setDefault('fr_FR'); }
+
+// --- Hard override formats (works regardless of locale path) ---
+/* If your MRBS is using strftime(): */
+$format['day']      = '%A %e %B %Y';   // mardi 27 août 2025
+$format['week']     = '%a %e %b';      // mar 27 août
+$format['month']    = '%e/%m/%Y';      // 27/08/2025
+$format['datetime'] = '%d/%m/%Y %H:%M';
+$format['time']     = '%H:%M';
+
+/* If your MRBS uses IntlDateFormatter (modern path), also set: */
+$date_format = 'd/m/Y';
+$time_format = 'HH:mm';
+
 
 
