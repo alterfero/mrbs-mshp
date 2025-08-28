@@ -129,7 +129,7 @@ $timezone = 'Pacific/Honolulu';
 date_default_timezone_set($timezone);
 setlocale(LC_ALL, 'fr_FR.UTF-8');
 $weekstarts = 1;
-$view_week_number = true:
+$view_week_number = true;
 $default_view = "month";
 $twentyfourhour_format = 1;
 
