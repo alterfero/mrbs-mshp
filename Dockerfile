@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y libicu-dev locales-all
 RUN docker-php-ext-install mysqli pdo pdo_mysql intl
 
 COPY web/ /var/www/html/
-COPY docker-config.inc.php /var/www/html/config.inc.php
+# COPY docker-config.inc.php /var/www/html/config.inc.php
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
