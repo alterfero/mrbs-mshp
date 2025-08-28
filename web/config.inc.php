@@ -122,7 +122,7 @@ if ($url = $_ENV['MYSQL_URL'] ?? $_ENV['MYSQL_PUBLIC_URL'] ?? null) {
 $mrbs_admin = "Secrétariat MSHP";
 $mrbs_admin_email = "secretariat-mshp@upf.pf ";
 $mrbs_company = "MSH-P";
-$mrbs_company_logo = "MSHP-logo-BD-couleur.jpg";
+$mrbs_company_logo = "mini-MSHP-logo.jpg";
 $mrbs_company_url = "https://www.mshp.upf.pf/fr";
 $default_language_tokens = "fr";
 
