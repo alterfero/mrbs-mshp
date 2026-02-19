@@ -7,6 +7,15 @@ RUN a2dismod mpm_event mpm_worker || true \
  && a2enmod mpm_prefork \
  && apache2ctl -M | grep mpm
 
+ # Diagnose duplicate MPM loads
+RUN set -eux; \
+  echo "=== Enabled mpm modules (mods-enabled) ==="; \
+  ls -l /etc/apache2/mods-enabled | grep mpm || true; \
+  echo "=== Any LoadModule mpm_ lines ==="; \
+  grep -R --line-number "LoadModule mpm_" /etc/apache2 || true; \
+  echo "=== apache2ctl -M (mpm) ==="; \
+  apache2ctl -M | grep mpm
+
 RUN apt-get update && apt-get install -y libicu-dev locales-all
 RUN docker-php-ext-install mysqli pdo pdo_mysql intl
 
