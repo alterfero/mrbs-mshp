@@ -1,5 +1,7 @@
 FROM php:8.2-apache
 
+ARG CACHEBUST=1
+
 RUN a2enmod rewrite
 
 # mod_php needs prefork; ensure only one MPM is enabled
