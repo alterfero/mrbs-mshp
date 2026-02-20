@@ -34,10 +34,13 @@ import_schema() {
   echo "Schema imported."
 }
 
-# Ensure mysql client exists
-if ! command -v mysql >/dev/null 2>&1; then
-  apt-get update && apt-get install -y default-mysql-client && rm -rf /var/lib/apt/lists/*
-fi
+# Ensure mysql client exists (ORIGINAL, changed after multiple MPM error)
+# if ! command -v mysql >/dev/null 2>&1; then
+#   apt-get update && apt-get install -y default-mysql-client && rm -rf /var/lib/apt/lists/*
+# fi
+
+# replaced block above with
+command -v mysql >/dev/null 2>&1 || { echo "mysql client missing"; exit 1; }
 
 wait_for_mysql
 if need_bootstrap; then
@@ -45,5 +48,10 @@ if need_bootstrap; then
 else
   echo "MRBS tables already present; skipping bootstrap."
 fi
+
+# added to prevent multiple mpms: enforce prefork at runtime too
+a2dismod mpm_event mpm_worker >/dev/null 2>&1 || true
+a2enmod mpm_prefork >/dev/null 2>&1 || true
+apache2ctl -M | grep mpm
 
 exec apache2-foreground
